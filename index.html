@@ -117,6 +117,101 @@
             color: var(--primary-color);
         }
 
+        /* 时间组件 */
+        .time-widget {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+            text-align: center;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .time-widget:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .current-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-date {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .current-location {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* 浮动粒子 */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        /* 浮动几何形状 */
+        .floating-shape {
+            position: fixed;
+            opacity: 0.1;
+            z-index: 0;
+            animation: float 15s infinite linear;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-accent);
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 15%;
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation-delay: -10s;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -310,11 +405,15 @@
         .skills-section {
             padding: 5rem 2rem;
             background: white;
+            position: relative;
+            overflow: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .section-title {
@@ -412,6 +511,8 @@
         .projects-section {
             padding: 5rem 2rem;
             background: var(--bg-light);
+            position: relative;
+            overflow: hidden;
         }
 
         .projects-grid {
@@ -427,6 +528,7 @@
             box-shadow: var(--shadow-md);
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .project-card:hover {
@@ -492,6 +594,8 @@
         .experience-section {
             padding: 5rem 2rem;
             background: white;
+            position: relative;
+            overflow: hidden;
         }
 
         .timeline {
@@ -589,11 +693,15 @@
             background: var(--gradient-primary);
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .contact-content {
             max-width: 600px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .contact-info {
@@ -633,6 +741,8 @@
             color: white;
             padding: 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .social-links {
@@ -692,6 +802,12 @@
             .contact-info {
                 grid-template-columns: 1fr;
             }
+
+            .time-widget {
+                right: 10px;
+                top: 80px;
+                min-width: 150px;
+            }
         }
 
         /* 动画效果 */
@@ -739,6 +855,50 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* 鼠标跟随效果 */
+        .cursor-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        /* 打字机效果 */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid white;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+
+        /* 滚动进度条 */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
     </style>
 </head>
 <body>
@@ -746,6 +906,17 @@
     <div class="loader" id="loader">
         <div class="loader-spinner"></div>
     </div>
+
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- 鼠标跟随效果 -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- 浮动几何形状 -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
 
     <!-- 导航栏 -->
     <header id="header">
@@ -761,11 +932,21 @@
         </nav>
     </header>
 
+    <!-- 时间组件 -->
+    <div class="time-widget" id="timeWidget">
+        <div class="current-time" id="currentTime">00:00:00</div>
+        <div class="current-date" id="currentDate">2024年1月1日</div>
+        <div class="current-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>重庆</span>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>你好，我是罗林</h1>
+                <h1 class="typewriter">你好，我是罗林</h1>
                 <p class="subtitle">大数据技术与工程 硕士</p>
                 <p class="description">
                     重庆科技大学 27届<br>
@@ -1048,6 +1229,14 @@
             } else {
                 header.classList.remove('scrolled');
             }
+            
+            // 更新滚动进度条
+            const scrollProgress = document.getElementById('scrollProgress');
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
         });
 
         // 平滑滚动
@@ -1114,43 +1303,44 @@
             });
         });
 
-        // 打字机效果
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.textContent = '';
+        // 时间组件功能
+        function updateTime() {
+            const now = new Date();
             
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
+            // 更新时间
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
             
-            type();
+            // 更新日期
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const weekDay = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
+            document.getElementById('currentDate').textContent = `${year}年${month}月${day}日 ${weekDay}`;
         }
 
-        // 页面加载时应用打字机效果
-        window.addEventListener('load', function() {
-            const heroTitle = document.querySelector('.hero-text h1');
-            if (heroTitle) {
-                const originalText = heroTitle.textContent;
-                typeWriter(heroTitle, originalText, 80);
-            }
+        // 初始化时间并每秒更新
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 鼠标跟随效果
+        const cursorFollower = document.getElementById('cursorFollower');
+        document.addEventListener('mousemove', function(e) {
+            cursorFollower.style.left = e.clientX + 'px';
+            cursorFollower.style.top = e.clientY + 'px';
         });
 
-        // 添加粒子背景效果
+        // 添加粒子效果
         function createParticle() {
             const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.width = '4px';
-            particle.style.height = '4px';
-            particle.style.background = 'rgba(102, 126, 234, 0.5)';
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
+            particle.className = 'particle';
             particle.style.left = Math.random() * window.innerWidth + 'px';
             particle.style.top = window.innerHeight + 'px';
-            particle.style.zIndex = '1';
+            particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            particle.style.width = Math.random() * 5 + 2 + 'px';
+            particle.style.height = particle.style.width;
             
             document.body.appendChild(particle);
             
@@ -1220,6 +1410,31 @@
         // 时间线动画延迟
         document.querySelectorAll('.timeline-item').forEach((item, index) => {
             item.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // 打字机效果
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // 页面加载时应用打字机效果
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero-text h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                typeWriter(heroTitle, originalText, 80);
+            }
         });
     </script>
 </body>
